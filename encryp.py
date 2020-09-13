@@ -11,8 +11,8 @@ print("* BadWares - Actividad  *")
 print("*************************")
 
 # Inputs de Mensaje y clave:
-message: str = input("Ingresa un mensaje>> ")
-clave: str = input("Ingresa la calve (clave)>> ")
+message: str = input("Ingresa un mensaje >> ")
+clave: str = input("Ingresa la calve (clave) >> ")
 
 message = list(message)  # Separamos el mensaje en un arreglo
 clave = list(clave)  # Separamos la calve en un arreglo

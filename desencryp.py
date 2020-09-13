@@ -1,80 +1,82 @@
-
+import numbers as np
+import os
+import pyclbr
 
 print("Desencryption method")
 
-mssg = input("Enter your message : ")
-key = input("Enter your key : ")
-rotations = 4
-numbs = []
-encmssg = []
-encmssgXOR = []
-mssg=list(mssg)
-key=list(key)
+message = input("Enter your message : ")
+clave = input("Enter your clave : ")
+
+num = []
+encrypt_message = []
+encrypt_XOR = []
+message=list(message)
+clave=list(clave)
 
 
-def permutation(mssg):
-    pair = len(mssg) % 2
-    if pair == 1:
-        times = int(round(len(mssg) / 2,0))-1
-        print(str(times))
+def permutacion(message):
+    esPar = len(message) % 2
+    if esPar == 1:
+        num_veces = int(round(len(message) / 2,0))-1
+        print(str(num_veces))
     else:
-        times = round(len(mssg) / 2)
-    newarr = [None] * len(mssg)
+        num_veces = round(len(message) / 2)
+    permutado = [None] * len(message)
     i=0
     j=0
-    while i < times:
-            newarr[j] = mssg[j+1]
-            newarr[j+1] = mssg[j]
+    while i < num_veces:
+            permutado[j] = message[j+1]
+            permutado[j+1] = message[j]
             i+=1
             j+=2
-    if pair == 1:
-        newarr[len(mssg)-1] = mssg[len(mssg)-1]
-    return newarr
+    if esPar == 1:
+        permutado[len(message)-1] = message[len(message)-1]
+    return permutado
 
-for i,el in enumerate(key):
-    numbs.append(ord(key[i]))
+for i,el in enumerate(clave):
+    num.append(ord(clave[i]))
 
-print(numbs)
-print(key)
-for i in range(rotations):
+print(num)
+print(clave)
+for i in range(8):
 
     print("Iteration " + str(i))
-    print("mssg:" + str(mssg))
+    print("message:" + str(message))
 
 
     #XOR
-    for i, el in enumerate(mssg):
-        encmssgXOR.append(chr(ord(mssg[i]) ^ ord(key[i%len(key)])))
+    for i, el in enumerate(message):
+        encrypt_XOR.append(chr(ord(message[i]) ^ ord(clave[i%len(clave)])))
 
-    encmssg = encmssgXOR.copy()
-    encmssgXOR.clear()
-    print("xor:" + str(encmssg))
-    mssg = permutation(encmssg)
-    encmssg.clear()
-    print("permutation:" + str(mssg))
+    encrypt_message = encrypt_XOR.copy()
+    encrypt_XOR.clear()
+    print("xor:" + str(encrypt_message))
+    message = permutacion(message)
+    encrypt_message.clear()
+    print("permutacion:" + str(message))
     # Polyalphabetical rotation
-    for i,el in enumerate(mssg):
-        if(ord(mssg[i]) > 64 and ord(mssg[i]) < 91):
-            encmssg.append(ord(mssg[i]) - numbs[i%len(numbs)])
-            while encmssg[i] < 65:
-                encmssg[i] = 91 - (65 - encmssg[i])
-            encmssg[i] = chr(encmssg[i])
+    for i,el in enumerate(message):
+        if(ord(message[i]) > 64 and ord(message[i]) < 91):
+            encrypt_message.append(ord(message[i]) - num[i%len(num)])
+            while encrypt_message[i] < 65:
+                encrypt_message[i] = 91 - (65 - encrypt_message[i])
+            encrypt_message[i] = chr(encrypt_message[i])
 
-        elif(ord(mssg[i]) > 96 and ord(mssg[i]) < 123):
-            encmssg.append(ord(mssg[i]) - numbs[i%len(numbs)])
-            while encmssg[i] < 97:
-                encmssg[i] = 123 - (97 - encmssg[i])
-            encmssg[i] = chr(encmssg[i])
+        elif(ord(message[i]) > 96 and ord(message[i]) < 123):
+            encrypt_message.append(ord(message[i]) - num[i%len(num)])
+            while encrypt_message[i] < 97:
+                encrypt_message[i] = 123 - (97 - encrypt_message[i])
+            encrypt_message[i] = chr(encrypt_message[i])
 
         else:
-            encmssg.append(mssg[i])
+            encrypt_message.append(message[i])
 
-    print("poly:" + str(encmssg))
+    print("poly:" + str(encrypt_message))
 
-    mssg.clear()
-    mssg = encmssg.copy()
-    encmssg.clear()
+    message.clear()
+    message = encrypt_message.copy()
+    encrypt_message.clear()
 
-encmssg = mssg.copy()
+encrypt_message = message.copy()
 #Final result
-print("Desencrypted message: " + str(encmssg))
+print("Desencrypted message: " + str(encrypt_message))

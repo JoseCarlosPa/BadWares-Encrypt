@@ -14,6 +14,8 @@ void print_bytes(byte* data, const byte* key, const int n) {
 	putchar('\n');
 }
 
+// Function to decode a key from the command line into a 128 bit location in memory
+// Source: https://stackoverflow.com/a/35452093
 byte* datahex(char* string) {
 
     if (string == NULL)
